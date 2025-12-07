@@ -16,7 +16,7 @@ const _interTight = Inter_Tight({
 export const metadata: Metadata = {
   title: "SalesPro CRM - Gestión de Ventas con IA",
   description: "CRM empresarial con automatización inteligente, pipeline visual y analytics en tiempo real",
-  generator: "v0.app",
+  generator: "Next.js",
   icons: {
     icon: [
       {

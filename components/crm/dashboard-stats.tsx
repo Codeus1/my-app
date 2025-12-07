@@ -1,19 +1,12 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { TrendingUp, DollarSign, Target, Users } from "lucide-react"
 import { useEffect, useState } from "react"
-import { getSupabaseBrowserClient } from "@/lib/supabase/client"
-
-interface Stats {
-  totalRevenue: number
-  openDeals: number
-  conversionRate: number
-  totalContacts: number
-}
+import { DollarSign, Target, TrendingUp, Users } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import { fetchDashboardStats, type DashboardStatsData } from "@/lib/dashboard/dashboard-service"
 
 export function DashboardStats() {
-  const [stats, setStats] = useState<Stats>({
+  const [stats, setStats] = useState<DashboardStatsData>({
     totalRevenue: 0,
     openDeals: 0,
     conversionRate: 0,
@@ -22,63 +15,19 @@ export function DashboardStats() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchStats() {
-      const supabase = getSupabaseBrowserClient()
-
-      const [{ data: deals }, { data: contacts }] = await Promise.all([
-        supabase.from("deals").select("value, stage"),
-        supabase.from("contacts").select("id", { count: "exact" }),
-      ])
-
-      if (deals) {
-        const totalRevenue = deals.filter((d) => d.stage === "closed_won").reduce((sum, d) => sum + Number(d.value), 0)
-        const openDeals = deals.filter((d) => d.stage !== "closed_won" && d.stage !== "closed_lost").length
-        const closedWon = deals.filter((d) => d.stage === "closed_won").length
-        const conversionRate = deals.length > 0 ? (closedWon / deals.length) * 100 : 0
-
-        setStats({
-          totalRevenue,
-          openDeals,
-          conversionRate: Math.round(conversionRate),
-          totalContacts: contacts?.length || 0,
-        })
-      }
-
+    async function load() {
+      const nextStats = await fetchDashboardStats()
+      setStats(nextStats)
       setIsLoading(false)
     }
-
-    fetchStats()
+    load()
   }, [])
 
   const statCards = [
-    {
-      title: "Ingresos Totales",
-      value: isLoading ? "..." : `$${stats.totalRevenue.toLocaleString()}`,
-      icon: DollarSign,
-      color: "text-green-600",
-      bgColor: "bg-green-100",
-    },
-    {
-      title: "Deals Abiertos",
-      value: isLoading ? "..." : stats.openDeals.toString(),
-      icon: Target,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
-    },
-    {
-      title: "Tasa de Conversión",
-      value: isLoading ? "..." : `${stats.conversionRate}%`,
-      icon: TrendingUp,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
-    },
-    {
-      title: "Total Contactos",
-      value: isLoading ? "..." : stats.totalContacts.toString(),
-      icon: Users,
-      color: "text-orange-600",
-      bgColor: "bg-orange-100",
-    },
+    { title: "Ingresos Totales", value: isLoading ? "..." : `$${stats.totalRevenue.toLocaleString()}`, icon: DollarSign, color: "text-green-600", bgColor: "bg-green-100" },
+    { title: "Deals Abiertos", value: isLoading ? "..." : stats.openDeals.toString(), icon: Target, color: "text-blue-600", bgColor: "bg-blue-100" },
+    { title: "Tasa de Conversion", value: isLoading ? "..." : `${stats.conversionRate}%`, icon: TrendingUp, color: "text-purple-600", bgColor: "bg-purple-100" },
+    { title: "Total Contactos", value: isLoading ? "..." : stats.totalContacts.toString(), icon: Users, color: "text-orange-600", bgColor: "bg-orange-100" },
   ]
 
   return (

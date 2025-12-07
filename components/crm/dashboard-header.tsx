@@ -1,8 +1,9 @@
 "use client"
 
-import { Building2, Bell, Settings, LogOut, LayoutDashboard, Users, Briefcase, ListChecks } from "lucide-react"
+import { Briefcase, Building2, LayoutDashboard, ListChecks, LogOut, Settings, Users, Bell } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -12,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { getSupabaseBrowserClient } from "@/lib/supabase/client"
 
 interface DashboardHeaderProps {
@@ -109,11 +109,11 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Settings className="mr-2 h-4 w-4" />
-                Configuración
+                Configuracion
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
-                Cerrar sesión
+                Cerrar sesion
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

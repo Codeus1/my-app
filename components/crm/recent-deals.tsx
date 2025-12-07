@@ -1,5 +1,5 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Building2 } from "lucide-react"
 
 interface Deal {
@@ -24,10 +24,10 @@ const stageColors: Record<string, string> = {
 }
 
 const stageLabels: Record<string, string> = {
-  prospecting: "Prospección",
-  qualification: "Calificación",
+  prospecting: "Prospeccion",
+  qualification: "Calificacion",
   proposal: "Propuesta",
-  negotiation: "Negociación",
+  negotiation: "Negociacion",
   closed_won: "Ganado",
   closed_lost: "Perdido",
 }
@@ -36,7 +36,7 @@ export function RecentDeals({ deals }: RecentDealsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Últimos Deals</CardTitle>
+        <CardTitle>Ultimos Deals</CardTitle>
         <CardDescription>Actividad reciente en tu pipeline</CardDescription>
       </CardHeader>
       <CardContent>
@@ -57,7 +57,7 @@ export function RecentDeals({ deals }: RecentDealsProps) {
                 </div>
                 <div className="flex items-center gap-3">
                   <Badge variant="secondary" className={stageColors[deal.stage]}>
-                    {stageLabels[deal.stage]}
+                    {stageLabels[deal.stage] || deal.stage}
                   </Badge>
                   <p className="font-semibold">${Number(deal.value).toLocaleString()}</p>
                 </div>

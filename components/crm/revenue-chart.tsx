@@ -1,7 +1,7 @@
 "use client"
 
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts"
 
 const data = [
   { month: "Ene", revenue: 45000 },
@@ -17,7 +17,7 @@ export function RevenueChart() {
     <Card>
       <CardHeader>
         <CardTitle>Ingresos Mensuales</CardTitle>
-        <CardDescription>Evolución de ingresos en los últimos 6 meses</CardDescription>
+        <CardDescription>Evolucion de ingresos en los ultimos 6 meses</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>

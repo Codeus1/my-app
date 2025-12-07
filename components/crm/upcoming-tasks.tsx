@@ -1,8 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Phone, Mail, UsersIcon } from "lucide-react"
 import { format } from "date-fns"
 import { es } from "date-fns/locale"
+import { Calendar, Mail, Phone, Users as UsersIcon } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface Activity {
   id: string
@@ -34,7 +34,7 @@ const typeColors: Record<string, string> = {
 const typeLabels: Record<string, string> = {
   call: "Llamada",
   email: "Email",
-  meeting: "Reunión",
+  meeting: "Reunion",
   task: "Tarea",
   note: "Nota",
 }
@@ -43,8 +43,8 @@ export function UpcomingTasks({ activities }: UpcomingTasksProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Próximas Tareas</CardTitle>
-        <CardDescription>Actividades pendientes para los próximos días</CardDescription>
+        <CardTitle>Proximas Tareas</CardTitle>
+        <CardDescription>Actividades pendientes para los proximos dias</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -70,7 +70,7 @@ export function UpcomingTasks({ activities }: UpcomingTasksProps) {
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge variant="secondary" className={typeColors[activity.type]}>
-                      {typeLabels[activity.type]}
+                      {typeLabels[activity.type] || activity.type}
                     </Badge>
                     {activity.due_date && (
                       <p className="text-sm text-muted-foreground">
